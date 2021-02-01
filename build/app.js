@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const generator_1 = require("./generator");
 const config = require("./config.json");
 const generador = new generator_1.Generador();
+//limitamos la longitud máxima de dígitos para evitar fuga de memoria con longitudes muy largas
 if (config.longitud > 9)
     config.longitud = 9;
 switch (config.algoritmo) {

@@ -5,7 +5,9 @@ const random = require('random');
 class Generador {
     generateSecuencialNumber(config) {
         const result = [];
+        //creamos un cupón por la cantidad de veces indicada
         for (let cupon = 1; cupon <= config.cantidad; cupon++) {
+            //lo convertimos a string para añadirle la cantidad de '0's a la izquierda nevesarios
             let cuponNumber = JSON.stringify(cupon);
             const numberZeros = (config.longitud - cuponNumber.length);
             for (let zero = 0; zero < numberZeros; zero++) {
@@ -15,6 +17,7 @@ class Generador {
         }
         return result;
     }
+    //recive como parametro un callback de las funciones que generan numeros para añadirle el valor alfabético aleatoreo
     generateAlfaNumber(generateNumber) {
         const numbers = generateNumber;
         const alfaNumbers = [];
@@ -26,6 +29,7 @@ class Generador {
         });
         return alfaNumbers;
     }
+    //para crear los numeros aleatoreos de una longitud específica creamos los numeros 10000 (cant de 0 igual que la longitud) y 90000 para establecer los parametos de los numeros aleatorios
     generateRandomNumber(config) {
         const result = [];
         for (let cupon = 1; cupon <= config.cantidad; cupon++) {

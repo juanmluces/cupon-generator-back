@@ -1,5 +1,4 @@
 import { Generador } from "./generator";
-// import config = require('./config.json');
 const express = require('express')
 const app = express()
 const port = 3000
@@ -8,9 +7,6 @@ const bp = require('body-parser');
 const cors = require('cors');
 
 app.use(cors())
-
-
-
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 
@@ -23,9 +19,7 @@ app.post('/', (req, res) => {
   for (let i = 0; i < config.longitud; i++) {
     maxNumber += '9'
   }
-  // if (config.cantidad > JSON.parse(maxNumber)) {
-  //   res.json({ error: 'error, debes indicar una cantidad menor respecto a la longitud de los cupones' })
-  // } else {
+
   switch (algoritmo) {
     case 'num secuencial':
       res.json(generador.generateSecuencialNumber(config));
@@ -43,7 +37,6 @@ app.post('/', (req, res) => {
       res.json({ error: 'ha habido un error con la cofiguracion del algoritmo' })
   }
 
-  // }
 })
 
 app.listen(port, () => {
