@@ -1,0 +1,14 @@
+{
+  "name": "cupon_generator",
+  "version": "1.0.0",
+  "description": "prueba técnica para traffGen",
+  "main": "app.js",
+  "scripts": {
+    "tsc": "tsc"
+  },
+  "author": "Juan Miguel Luces",
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^4.1.3"
+  }
+}
