@@ -44,5 +44,26 @@ class Generador {
         }
         return result;
     }
+    sortAlgoritm(pConfig) {
+        const algoritmo = pConfig.algoritmo;
+        let result;
+        switch (algoritmo) {
+            case 'num secuencial':
+                result = this.generateSecuencialNumber(pConfig);
+                break;
+            case 'num random':
+                result = this.generateRandomNumber(pConfig);
+                break;
+            case 'alfa secuencial':
+                result = this.generateAlfaNumber(this.generateSecuencialNumber(pConfig));
+                break;
+            case 'alfa random':
+                result = this.generateAlfaNumber(this.generateRandomNumber(pConfig));
+                break;
+            default:
+                result = { error: 'ha habido un error con la cofiguracion del algoritmo' };
+        }
+        return result;
+    }
 }
 exports.Generador = Generador;

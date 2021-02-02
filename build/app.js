@@ -1,24 +1,45 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const generator_1 = require("./generator");
-const config = require("./config.json");
+const defaultConfig = require("./config.json");
+const express = require('express');
+const app = express();
+const port = 3000;
 const generador = new generator_1.Generador();
-//limitamos la longitud máxima de dígitos para evitar fuga de memoria con longitudes muy largas
-if (config.longitud > 9)
-    config.longitud = 9;
-switch (config.algoritmo) {
-    case 'num secuencial':
-        console.log(generador.generateSecuencialNumber(config));
-        break;
-    case 'num random':
-        console.log(generador.generateRandomNumber(config));
-        break;
-    case 'alfa secuencial':
-        console.log(generador.generateAlfaNumber(generador.generateSecuencialNumber(config)));
-        break;
-    case 'alfa random':
-        console.log(generador.generateAlfaNumber(generador.generateRandomNumber(config)));
-        break;
-    default:
-        console.log({ error: 'ha habido un error con la cofiguracion del algoritmo' });
-}
+const bp = require('body-parser');
+const cors = require('cors');
+app.use(cors());
+app.use(bp.json());
+app.use(bp.urlencoded({ extended: true }));
+//para peticiones directas al server
+app.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const config = defaultConfig;
+    try {
+        yield res.json(generador.sortAlgoritm(config));
+    }
+    catch (error) {
+        res.json({ error: error.message });
+    }
+}));
+//para peticiones desde el formulario del front
+app.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const config = req.body;
+    try {
+        yield res.json(generador.sortAlgoritm(config));
+    }
+    catch (error) {
+        res.json({ error: error.message });
+    }
+}));
+app.listen(port, () => {
+    console.log(`Listening at http://localhost:${port}`);
+});

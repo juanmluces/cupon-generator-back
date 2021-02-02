@@ -1,26 +1,38 @@
 import { Generador } from "./generator";
-import config = require('./config.json');
-
+import defaultConfig = require('./config.json');
+const express = require('express')
+const app = express()
+const port = 3000
 const generador = new Generador()
+const bp = require('body-parser');
+const cors = require('cors');
 
+app.use(cors())
+app.use(bp.json())
+app.use(bp.urlencoded({ extended: true }))
 
+//para peticiones directas al server
+app.get('/', async (req, res) => {
+  const config = defaultConfig;
+  try {
+    await res.json(generador.sortAlgoritm(config))
+  } catch (error) {
+    res.json({ error: error.message })
+  }
 
-//limitamos la longitud máxima de dígitos para evitar fuga de memoria con longitudes muy largas
-if (config.longitud > 9) config.longitud = 9
+})
 
-switch (config.algoritmo) {
-  case 'num secuencial':
-    console.log(generador.generateSecuencialNumber(config));
-    break;
-  case 'num random':
-    console.log(generador.generateRandomNumber(config));
-    break;
-  case 'alfa secuencial':
-    console.log(generador.generateAlfaNumber(generador.generateSecuencialNumber(config)));
-    break;
-  case 'alfa random':
-    console.log(generador.generateAlfaNumber(generador.generateRandomNumber(config)));
-    break;
-  default:
-    console.log({ error: 'ha habido un error con la cofiguracion del algoritmo' })
-}
+//para peticiones desde el formulario del front
+app.post('/', async (req, res) => {
+  const config = req.body
+  try {
+    await res.json(generador.sortAlgoritm(config))
+  } catch (error) {
+    res.json({ error: error.message })
+  }
+})
+
+app.listen(port, () => {
+  console.log(`Listening at http://localhost:${port}`)
+})
+
