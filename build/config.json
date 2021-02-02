@@ -1,5 +1,5 @@
 {
     "cantidad": 20,
-    "algoritmo": "alfa random",
+    "algoritmo": "alfa secuencial",
     "longitud": 8
 }

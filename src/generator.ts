@@ -1,8 +1,11 @@
-const random = require('random')
+import { Config } from "./configInterface";
+
+const random = require('random');
+
 
 export class Generador {
 
-  generateSecuencialNumber(config): string[] {
+  generateSecuencialNumber(config: Config): string[] {
     const result: string[] = [];
 
     //creamos un cupón por la cantidad de veces indicada
@@ -35,7 +38,7 @@ export class Generador {
 
 
   //para crear los numeros aleatoreos de una longitud específica creamos los numeros 10000 (cant de 0 igual que la longitud) y 90000 para establecer los parametos de los numeros aleatorios
-  generateRandomNumber(config): string[] {
+  generateRandomNumber(config: Config): string[] {
     const result: string[] = [];
     for (let cupon = 1; cupon <= config.cantidad; cupon++) {
       let lengthOfNumberString: string = '1';
@@ -51,7 +54,7 @@ export class Generador {
   }
 
 
-  sortAlgoritm(pConfig) {
+  sortAlgoritm(pConfig: Config): any {
     const algoritmo = pConfig.algoritmo;
     let result;
     switch (algoritmo) {

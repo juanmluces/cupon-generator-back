@@ -1,5 +1,6 @@
 import { Generador } from "./generator";
 import defaultConfig = require('./config.json');
+import { Config } from "./configInterface";
 const express = require('express')
 const app = express()
 const port = 3000
@@ -13,7 +14,7 @@ app.use(bp.urlencoded({ extended: true }))
 
 //para peticiones directas al server
 app.get('/', async (req, res) => {
-  const config = defaultConfig;
+  const config: Config = defaultConfig;
   try {
     await res.json(generador.sortAlgoritm(config))
   } catch (error) {
@@ -24,7 +25,7 @@ app.get('/', async (req, res) => {
 
 //para peticiones desde el formulario del front
 app.post('/', async (req, res) => {
-  const config = req.body
+  const config: Config = req.body
   try {
     await res.json(generador.sortAlgoritm(config))
   } catch (error) {
